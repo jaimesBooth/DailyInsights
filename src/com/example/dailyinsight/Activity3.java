@@ -65,7 +65,8 @@ public class Activity3 extends Activity implements OnClickListener {
                 }
             };
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public void onClick(View v) {
         showDialog(Time_PICKER_ID);
     }
