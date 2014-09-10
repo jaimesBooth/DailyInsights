@@ -35,6 +35,7 @@ public class MainActivity extends Activity {
 	// The gesture detector object which detects swipes
 	private GestureDetectorCompat gestureDetector;
 	
+
 	/**
 	 * Creates the DailyInsight main activity.
 	 */
@@ -135,6 +136,9 @@ public class MainActivity extends Activity {
 	            float velocityX, float velocityY) 
 	    {
 	    	
+	    	// Initiate a layout object so it's background can be changed
+	    	RelativeLayout  layout = (RelativeLayout) findViewById(R.id.relativeLayoutid);
+	    	
 	    	// user will move forward through messages on fling left
 	    	boolean forward = false;
 	    	// user will move backward through messages on fling right
@@ -206,12 +210,11 @@ public class MainActivity extends Activity {
 	    		Toast.makeText(getApplicationContext(), 
 	                    "Down", Toast.LENGTH_LONG).show();
 	    		
-	    		//@TODO change backgrounds
-	    		decrementInsightIndex();
-	    		
-	    		getInsightAtIndex(insightsIndex);
-	    		
-	    		insight.setText(getInsightAtIndex(insightsIndex));
+	    		//@TODO change backgrounds in a cycle
+
+	    		// Change background
+	    		layout.setBackgroundResource(R.drawable.a2background);
+
 	    	}
 	    	// user is cycling up through background
 	    	else if(up)
@@ -219,12 +222,9 @@ public class MainActivity extends Activity {
 
 	    		Toast.makeText(getApplicationContext(), 
 	                    "Up", Toast.LENGTH_LONG).show();
-	    		
-	    		//@TODO change backgrounds
-	    		incrementInsightIndex();
-	    		
-	    		getInsightAtIndex(insightsIndex);
-	    		insight.setText(getInsightAtIndex(insightsIndex));
+
+	    		// Change background
+	    		layout.setBackgroundResource(R.drawable.a3background);
 	    	}
 
 	    	// Notify of detected gesture
