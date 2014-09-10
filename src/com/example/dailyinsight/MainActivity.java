@@ -17,13 +17,16 @@ import android.widget.*;
  * The main window of the DailyInsights app.
  * @author 09/09/14 Sia, Luke, Ron, jaimes 1305390
  * @modified 10/09/14 Implemented swipe recognition:
- * http://code.tutsplus.com/tutorials/android-sdk-detecting-gestures--mobile-21161
- *
+ * 	http://code.tutsplus.com/tutorials/android-sdk-detecting-gestures--mobile-21161
+ * 	Implemented change of insight on swipe Left / Right
+ * 	Implemented change of background on swipe Up / Down
+ * 	http://stackoverflow.com/questions/3355220/android-how-can-i-make-a-drawable-array
  */
 public class MainActivity extends Activity {
 
 	Button aButton; // The Enter Button on the Main Activity
-	TextView insight; // The Insight to display
+	TextView insight; // The textbox to display the Insight
+	
 	
 	// A small array of insights for testing purposes
 	String[] insights = {"Health: The greatest wealth is health",
@@ -31,11 +34,19 @@ public class MainActivity extends Activity {
 			"Goals: A goal without a plan is just a wish"};
 	
 	int insightsIndex = 0; // Pointer to currently displayed insight
-
+	
+	
+	// Array of backgrounds for testing purposes
+	// http://stackoverflow.com/questions/3355220/android-how-can-i-make-a-drawable-array
+	int[] backgroundArray = new int[] {R.drawable.purple_flowers, R.drawable.wooden_floor, R.drawable.lamp, R.drawable.white_background};
+	
+	int backgroundIndex = 0; // Pointer to currently displayed background
+	
+	
 	// The gesture detector object which detects swipes
 	private GestureDetectorCompat gestureDetector;
-	
 
+	
 	/**
 	 * Creates the DailyInsight main activity.
 	 */
@@ -55,18 +66,17 @@ public class MainActivity extends Activity {
 		
 		// Listen for a click on this button
 		aButton.setOnClickListener(new OnClickListener() 
-		{
-			
-			/**
-			 * Performs the enclosed code on button click.
-			 */
-			public void onClick(View v) 
 			{
-
-				insight.setText("The longer you wait to do something you should do now, the greater the odds that you will never actually do it.");
-
-			}
-		});
+				/**
+				 * Performs the enclosed code on button click.
+				 */
+				public void onClick(View v) 
+				{
+	
+					insight.setText("The longer you wait to do something you should do now, the greater the odds that you will never actually do it.");
+	
+				}
+			});
 
 	}
 	
@@ -98,6 +108,7 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
 	
 	/**
 	 * Handles gesture events. An enclosed class.
@@ -210,10 +221,10 @@ public class MainActivity extends Activity {
 	    		Toast.makeText(getApplicationContext(), 
 	                    "Down", Toast.LENGTH_LONG).show();
 	    		
-	    		//@TODO change backgrounds in a cycle
+	    		decrementBackgroundIndex();
 
 	    		// Change background
-	    		layout.setBackgroundResource(R.drawable.a2background);
+	    		layout.setBackgroundResource(backgroundArray[backgroundIndex]);
 
 	    	}
 	    	// user is cycling up through background
@@ -223,8 +234,10 @@ public class MainActivity extends Activity {
 	    		Toast.makeText(getApplicationContext(), 
 	                    "Up", Toast.LENGTH_LONG).show();
 
+	    		incrementBackgroundIndex();
+
 	    		// Change background
-	    		layout.setBackgroundResource(R.drawable.a3background);
+	    		layout.setBackgroundResource(backgroundArray[backgroundIndex]);
 	    	}
 
 	    	// Notify of detected gesture
@@ -236,7 +249,7 @@ public class MainActivity extends Activity {
 	}
 	
 	
-	  /**
+	/**
      * Increments the insights array, looping if end of array is reached.
      */
 	private void incrementInsightIndex() 
@@ -280,20 +293,42 @@ public class MainActivity extends Activity {
 	}
 	
 	
+	/**
+     * Increments the backgrounds array, looping if end of array is reached.
+     */
+	private void incrementBackgroundIndex() 
+	{
+		
+		if (backgroundIndex == (backgroundArray.length -1))
+		{
+			backgroundIndex = 0;
+		}
+		else
+			backgroundIndex++;
+		
+	}
+	
+    /**
+     * Decrements the backgrounds array, looping if beginning of array is reached.
+     */
+	private void decrementBackgroundIndex() 
+	{
+		
+		if (backgroundIndex == 0)
+		{
+			backgroundIndex = (backgroundArray.length -1);
+		}
+		else
+			backgroundIndex--;
+		
+	}
+	
+	
 	/** Called when the user clicks the activity1 button.
 	 * Call defined in the activity_main.xml */
 	public void changeToActivity1(View view) {
 	    // Do something in response to button
 		Intent intent = new Intent(this, Activity1.class);
-		//EditText editText = (EditText) findViewById(R.id.edit_message);
-		
-		//Spinner spinner = (Spinner) findViewById(R.id.spinner1);
-		
-		//String name = String.valueOf(spinner.getSelectedItem());
-		
-		//editText.setText(name);
-		
-		//intent.putExtra(EXTRA_MESSAGE, message);
 		
 		startActivity(intent);
 
@@ -304,15 +339,6 @@ public class MainActivity extends Activity {
 	public void changeToActivity2(View view) {
 	    // Do something in response to button
 		Intent intent = new Intent(this, Activity2.class);
-		//EditText editText = (EditText) findViewById(R.id.edit_message);
-		
-		//Spinner spinner = (Spinner) findViewById(R.id.spinner1);
-		
-		//String name = String.valueOf(spinner.getSelectedItem());
-		
-		//editText.setText(name);
-		
-		//intent.putExtra(EXTRA_MESSAGE, message);
 		
 		startActivity(intent);
 	}
@@ -322,15 +348,6 @@ public class MainActivity extends Activity {
 	public void changeToActivity3(View view) {
 	    // Do something in response to button
 		Intent intent = new Intent(this, Activity3.class);
-		//EditText editText = (EditText) findViewById(R.id.edit_message);
-		
-		//Spinner spinner = (Spinner) findViewById(R.id.spinner1);
-		
-		//String name = String.valueOf(spinner.getSelectedItem());
-		
-		//editText.setText(name);
-		
-		//intent.putExtra(EXTRA_MESSAGE, message);
 		
 		startActivity(intent);
 	}
