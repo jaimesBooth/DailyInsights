@@ -8,6 +8,7 @@ import android.support.v4.view.GestureDetectorCompat;
 //import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,6 +22,8 @@ import android.widget.*;
  * 	Implemented change of insight on swipe Left / Right
  * 	Implemented change of background on swipe Up / Down
  * 	http://stackoverflow.com/questions/3355220/android-how-can-i-make-a-drawable-array
+ * @modified 19/09/14 Implemented changing to settings activity when selecting settings from menu.
+ *  http://developer.android.com/guide/topics/ui/menus.html#RespondingOptionsMenu
  */
 public class MainActivity extends Activity {
 
@@ -55,6 +58,7 @@ public class MainActivity extends Activity {
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
 		aButton = (Button) this.findViewById(R.id.button1);
 		
 		// Initialize the gesture detector
@@ -92,7 +96,7 @@ public class MainActivity extends Activity {
 	
 	
 	/**
-	 * Sets the insight Text view to the specified String.
+	 * Sets the insight Text view to the specified String.w
 	 * @param text
 	 */
 	public void setInsightText(String text) {
@@ -107,6 +111,31 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+	/**
+	 * Passes the selected MenuItem when the user selects an item from the options 
+	 * menu (including action items in the action bar).
+	 * http://developer.android.com/guide/topics/ui/menus.html#RespondingOptionsMenu
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) 
+	{
+	    // Handle item selection
+	    switch (item.getItemId())
+	    {
+	        case R.id.action_settings:
+	        	// Open activity 2 in response to selecting settings
+	    		Intent intent = new Intent(this, Activity2.class);
+	    		
+	    		startActivity(intent);
+	            return true;
+	        //case R.id.help:
+	            //showHelp();
+	            //return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
 	}
 	
 	
