@@ -27,8 +27,8 @@ import android.widget.*;
  */
 public class MainActivity extends Activity {
 
-	Button aButton; // The Enter Button on the Main Activity
-	TextView insight; // The textbox to display the Insight
+	private Button aButton; // The Enter Button on the Main Activity
+	private TextView insight; // The textbox to display the Insight
 	
 	
 	// A small array of insights for testing purposes
@@ -59,7 +59,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		aButton = (Button) this.findViewById(R.id.button1);
+		setaButton((Button) this.findViewById(R.id.button1));
 		
 		// Initialize the gesture detector
 		gestureDetector = new GestureDetectorCompat(this, new MyGestureListener());
@@ -69,7 +69,7 @@ public class MainActivity extends Activity {
 		insight.setTextColor(Color.rgb(200,0,0));
 		
 		// Listen for a click on this button
-		aButton.setOnClickListener(new OnClickListener() 
+		getaButton().setOnClickListener(new OnClickListener() 
 			{
 				/**
 				 * Performs the enclosed code on button click.
@@ -99,7 +99,8 @@ public class MainActivity extends Activity {
 	 * Sets the insight Text view to the specified String.w
 	 * @param text
 	 */
-	public void setInsightText(String text) {
+	public void setInsightText(String text) 
+	{
 		insight.setText(text);
 	}
 
@@ -379,6 +380,26 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(this, Activity3.class);
 		
 		startActivity(intent);
+	}
+
+
+	/**
+	 * Gets the aButton.
+	 * @return
+	 */
+	public Button getaButton() 
+	{
+		return aButton;
+	}
+
+
+	/**
+	 * Sets the aButton.
+	 * @param aButton
+	 */
+	public void setaButton(Button aButton) 
+	{
+		this.aButton = aButton;
 	}
 
 }
