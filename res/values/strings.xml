@@ -22,10 +22,10 @@
     </string-array>
 
     <string name="title_activity_activity2">Activity2</string>
-    <string name="radio_attitude">Attitude</string>
-    <string name="radio_hope">Hope</string>
-    <string name="radio_change">Change</string>
-    <string name="radio_action">Action</string>
+    <string name="radio_goals">Goals</string>
+    <string name="radio_all">All</string>
+    <string name="radio_health">Health</string>
+    <string name="radio_wealth">Wealth</string>
     <string name="contDesc">This is a topic button</string>
     
     <string name="title_activity_activity3">Activity3</string>

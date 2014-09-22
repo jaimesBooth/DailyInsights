@@ -34,7 +34,9 @@ public class MainActivity extends Activity {
 	// A small array of insights for testing purposes
 	String[] insights = {"Health: The greatest wealth is health",
 			"Wealth: Wealth is not his that has it but his that enjoys it",
-			"Goals: A goal without a plan is just a wish"};
+			"Goals: A goal without a plan is just a wish",
+			"Goals: The longer you wait to do something you should do now, "
+			+ "the greater the odds that you will never actually do it."};
 	
 	int insightsIndex = 0; // Pointer to currently displayed insight
 	
@@ -67,6 +69,11 @@ public class MainActivity extends Activity {
 		// Format the insight text box (TextView)
 		insight = (TextView) findViewById(R.id.textView3);
 		insight.setTextColor(Color.rgb(200,0,0));
+		
+		// Place a short tutorial on how to use the app in the insight text box
+		insight.setText("Swipe left / right to change Insight" + System.getProperty ("line.separator")
+				+ "Up / down to change background" + System.getProperty ("line.separator")
+				+ "Settings accessible from the action bar");
 		
 		// Listen for a click on this button
 		getaButton().setOnClickListener(new OnClickListener() 
