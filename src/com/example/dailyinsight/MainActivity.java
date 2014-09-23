@@ -16,7 +16,7 @@ import android.widget.*;
 
 /**
  * The main window of the DailyInsights app.
- * @author 09/09/14 Sia, Luke, Ron, Jaimes 1305390
+ * @author 09/09/14 Sia 1135311, Luke 1092144, Ron 1250610, Jaimes 1305390
  * @modified 10/09/14 Implemented swipe recognition:
  * 	http://code.tutsplus.com/tutorials/android-sdk-detecting-gestures--mobile-21161
  * 	Implemented change of insight on swipe Left / Right
