@@ -16,7 +16,7 @@ import android.widget.*;
 
 /**
  * The main window of the DailyInsights app.
- * @author 09/09/14 Sia, Luke, Ron, jaimes 1305390
+ * @author 09/09/14 Sia, Luke, Ron, Jaimes 1305390
  * @modified 10/09/14 Implemented swipe recognition:
  * 	http://code.tutsplus.com/tutorials/android-sdk-detecting-gestures--mobile-21161
  * 	Implemented change of insight on swipe Left / Right
@@ -24,6 +24,7 @@ import android.widget.*;
  * 	http://stackoverflow.com/questions/3355220/android-how-can-i-make-a-drawable-array
  * @modified 19/09/14 Implemented changing to settings activity when selecting settings from menu.
  *  http://developer.android.com/guide/topics/ui/menus.html#RespondingOptionsMenu
+ * @modified 23/09/14 Removed buttons to activity.
  */
 public class MainActivity extends Activity {
 
@@ -85,7 +86,7 @@ public class MainActivity extends Activity {
 				{
 	
 					insight.setText("The longer you wait to do something you should do now, the greater the odds that you will never actually do it.");
-	
+					insightsIndex = 3;
 				}
 			});
 
@@ -358,35 +359,6 @@ public class MainActivity extends Activity {
 		else
 			backgroundIndex--;
 		
-	}
-	
-	
-	/** Called when the user clicks the activity1 button.
-	 * Call defined in the activity_main.xml */
-	public void changeToActivity1(View view) {
-	    // Do something in response to button
-		Intent intent = new Intent(this, Activity1.class);
-		
-		startActivity(intent);
-
-	}
-	
-	/** Called when the user clicks the activity2 button.
-	 * Call defined in the activity_main.xml */
-	public void changeToActivity2(View view) {
-	    // Do something in response to button
-		Intent intent = new Intent(this, Activity2.class);
-		
-		startActivity(intent);
-	}
-	
-	/** Called when the user clicks the activity3 button.
-	 * Call defined in the activity_main.xml */
-	public void changeToActivity3(View view) {
-	    // Do something in response to button
-		Intent intent = new Intent(this, Activity3.class);
-		
-		startActivity(intent);
 	}
 
 
