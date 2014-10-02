@@ -25,6 +25,7 @@ import android.widget.*;
  * @modified 19/09/14 Implemented changing to settings activity when selecting settings from menu.
  *  http://developer.android.com/guide/topics/ui/menus.html#RespondingOptionsMenu
  * @modified 23/09/14 Removed buttons to activity.
+ * @Modified 01/10/14 Reduced code repetition, and edited button action message. Replaced string away with new quote and category classes.
  */
 public class MainActivity extends Activity {
 
@@ -33,11 +34,16 @@ public class MainActivity extends Activity {
 	
 	
 	// A small array of insights for testing purposes
-	String[] insights = {"Health: The greatest wealth is health",
-			"Wealth: Wealth is not his that has it but his that enjoys it",
-			"Goals: A goal without a plan is just a wish",
-			"Goals: The longer you wait to do something you should do now, "
-			+ "the greater the odds that you will never actually do it."};
+	quote[] insights = {new quote("It is health \n that is the real wealth", category.health),
+						new quote("Everytime you eat or drink \n you are either feeding \n disease \n or fighting it", category.health),
+						new quote("Wealth \n is the ability \n to fully experience \n life", category.wealth),
+						new quote("Wealth \n is the heart and mind \n not the \npocket", category.wealth),
+						new quote("The longer you wait to do something you should do now, the greater the odds that you will never actually do it", category.goals),
+						new quote("A goal without \n a plan \n is just a wish", category.goals),
+						new quote("A bad attitude \n is like a flat tire. \n If your don't change it \n you'll never go \n anywhere", category.attitude),
+						new quote("Until you spread your wings. You'll have no idea how far you can fly", category.attitude),
+						new quote("Your beliefs pave the way to success \n or block you", category.beliefs),
+						new quote("Whatever the mind \n of man can conceive and believe \n the mind can achieve", category.beliefs)};
 	
 	int insightsIndex = 0; // Pointer to currently displayed insight
 	
@@ -55,6 +61,7 @@ public class MainActivity extends Activity {
 	
 	/**
 	 * Creates the DailyInsight main activity.
+	 * 
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -72,9 +79,7 @@ public class MainActivity extends Activity {
 		insight.setTextColor(Color.rgb(200,0,0));
 		
 		// Place a short tutorial on how to use the app in the insight text box
-		insight.setText("Swipe left / right to change Insight" + System.getProperty ("line.separator")
-				+ "Up / down to change background" + System.getProperty ("line.separator")
-				+ "Settings accessible from the action bar");
+		insight.setText("Swipe left / right to change Insight \n Up / down to change background \n Settings accessible from the action bar");
 		
 		// Listen for a click on this button
 		getaButton().setOnClickListener(new OnClickListener() 
@@ -84,9 +89,7 @@ public class MainActivity extends Activity {
 				 */
 				public void onClick(View v) 
 				{
-	
-					insight.setText("The longer you wait to do something you should do now, the greater the odds that you will never actually do it.");
-					insightsIndex = 3;
+					insight.setText("Todays Insight is: \n The longer you wait to do something you should do now, the greater the odds that you will never actually do it.");
 				}
 			});
 
@@ -326,7 +329,7 @@ public class MainActivity extends Activity {
 	private String getInsightAtIndex(int insightsIndex) 
 	{
 		
-		return insights[insightsIndex];
+		return insights[insightsIndex].getMessage();
 		
 	}
 	
