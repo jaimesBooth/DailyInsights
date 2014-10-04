@@ -1,17 +1,22 @@
 package com.example.dailyinsight;
 
-public class quote {
+/**
+ * Describes quote objects.
+ * @author Luke
+ *
+ */
+public class Quote {
 	
 	//Attributes for the quote class
 	private String message; //The quote message
-	private category type; //The quote type
+	private Category type; //The quote type
 	
 	/**
 	 * Constructor for the quote class
 	 * @param insight the inspirational message of the quote object
 	 * @param type the category type of the quote object
 	 */
-	public quote (String message, category type) {
+	public Quote (String message, Category type) {
 		this.message = message;
 		this.type = type;
 	}
@@ -36,7 +41,7 @@ public class quote {
 	 * Accessor method for getting the object category
 	 * @return the category of the object
 	 */
-	public category getCategory() {
+	public Category getCategory() {
 		return type;
 	}
 	
@@ -44,7 +49,7 @@ public class quote {
 	 * Mutator method for setting the object category
 	 * @param the new category of the object
 	 */
-	public void setCategory(category type) {
+	public void setCategory(Category type) {
 		this.type = type;
 	}
 }

@@ -20,6 +20,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/radio_all" />
+        
+        <RadioButton
+            android:id="@+id/radioAttitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_attitude" />
+        
+        <RadioButton
+            android:id="@+id/radioBeliefs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_beliefs" />
+        
+        <RadioButton
+            android:id="@+id/radioGoals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/radio_goals" />
 
         <RadioButton
             android:id="@+id/radioHealth"
@@ -31,14 +50,7 @@
             android:id="@+id/radioWealth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/radio_wealth" />
-
-        <RadioButton
-            android:id="@+id/radioGoals"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/radio_goals" />
+            android:text="@string/radio_wealth" /> 
     </RadioGroup>
 
     <ImageButton

@@ -1,5 +1,8 @@
 package com.example.dailyinsight;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -26,33 +29,37 @@ import android.widget.*;
  *  http://developer.android.com/guide/topics/ui/menus.html#RespondingOptionsMenu
  * @modified 23/09/14 Removed buttons to activity.
  * @Modified 01/10/14 Reduced code repetition, and edited button action message. Replaced string away with new quote and category classes.
+ * @modified 04/10/14 Jaimes Refactor Category and Quote class to start with Capital. Added selectedCategory attribute.
+ * 	ArrayList of selected insights based on selected category. Set attributes and methods to static to be accessible from settings activity.
  */
 public class MainActivity extends Activity {
 
 	private Button aButton; // The Enter Button on the Main Activity
-	private TextView insight; // The textbox to display the Insight
-	
+	private static TextView insight; // The textbox to display the Insight
+	private static Category selectedCategory; //The currently selected category topic
 	
 	// A small array of insights for testing purposes
-	quote[] insights = {new quote("It is health \n that is the real wealth", category.health),
-						new quote("Everytime you eat or drink \n you are either feeding \n disease \n or fighting it", category.health),
-						new quote("Wealth \n is the ability \n to fully experience \n life", category.wealth),
-						new quote("Wealth \n is the heart and mind \n not the \npocket", category.wealth),
-						new quote("The longer you wait to do something you should do now, the greater the odds that you will never actually do it", category.goals),
-						new quote("A goal without \n a plan \n is just a wish", category.goals),
-						new quote("A bad attitude \n is like a flat tire. \n If your don't change it \n you'll never go \n anywhere", category.attitude),
-						new quote("Until you spread your wings. You'll have no idea how far you can fly", category.attitude),
-						new quote("Your beliefs pave the way to success \n or block you", category.beliefs),
-						new quote("Whatever the mind \n of man can conceive and believe \n the mind can achieve", category.beliefs)};
+	private static Quote[] insights = {new Quote("It is health \n that is the real wealth", Category.health),
+						new Quote("Everytime you eat or drink \n you are either feeding \n disease \n or fighting it", Category.health),
+						new Quote("Wealth \n is the ability \n to fully experience \n life", Category.wealth),
+						new Quote("Wealth \n is the heart and mind \n not the \npocket", Category.wealth),
+						new Quote("The longer you wait to do something you should do now, the greater the odds that you will never actually do it", Category.goals),
+						new Quote("A goal without \n a plan \n is just a wish", Category.goals),
+						new Quote("A bad attitude \n is like a flat tire. \n If your don't change it \n you'll never go \n anywhere", Category.attitude),
+						new Quote("Until you spread your wings. You'll have no idea how far you can fly", Category.attitude),
+						new Quote("Your beliefs pave the way to success \n or block you", Category.beliefs),
+						new Quote("Whatever the mind \n of man can conceive and believe \n the mind can achieve", Category.beliefs)};
 	
-	int insightsIndex = 0; // Pointer to currently displayed insight
+	private static ArrayList<Quote> selectedInsights; //The current selection of insight quotes based on selected category topic
+	
+	private int insightsIndex = 0; // Pointer to currently displayed insight
 	
 	
 	// Array of backgrounds for testing purposes
 	// http://stackoverflow.com/questions/3355220/android-how-can-i-make-a-drawable-array
-	int[] backgroundArray = new int[] {R.drawable.purple_flowers, R.drawable.wooden_floor, R.drawable.lamp, R.drawable.white_background};
+	private int[] backgroundArray = new int[] {R.drawable.purple_flowers, R.drawable.wooden_floor, R.drawable.lamp, R.drawable.white_background};
 	
-	int backgroundIndex = 0; // Pointer to currently displayed background
+	private int backgroundIndex = 0; // Pointer to currently displayed background
 	
 	
 	// The gesture detector object which detects swipes
@@ -71,6 +78,10 @@ public class MainActivity extends Activity {
 		
 		setaButton((Button) this.findViewById(R.id.button1));
 		
+		// Initialize the selected category
+		selectedCategory = Category.all;
+		selectedInsights =  new ArrayList<Quote>(Arrays.asList(insights));
+		
 		// Initialize the gesture detector
 		gestureDetector = new GestureDetectorCompat(this, new MyGestureListener());
 		
@@ -87,6 +98,7 @@ public class MainActivity extends Activity {
 				/**
 				 * Performs the enclosed code on button click.
 				 */
+				@Override
 				public void onClick(View v) 
 				{
 					insight.setText("Todays Insight is: \n The longer you wait to do something you should do now, the greater the odds that you will never actually do it.");
@@ -100,17 +112,18 @@ public class MainActivity extends Activity {
 	 * Triggers the gestureDetectector on a touch event.
 	 */
 	@Override 
-    public boolean onTouchEvent(MotionEvent event){ 
+    public boolean onTouchEvent(MotionEvent event)
+	{ 
         this.gestureDetector.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
 	
 	
 	/**
-	 * Sets the insight Text view to the specified String.w
+	 * Sets the insight Text view to the specified String.
 	 * @param text
 	 */
-	public void setInsightText(String text) 
+	public static void setInsightText(String text) 
 	{
 		insight.setText(text);
 	}
@@ -296,7 +309,7 @@ public class MainActivity extends Activity {
 	private void incrementInsightIndex() 
 	{
 		
-		if (insightsIndex == (insights.length -1))
+		if (insightsIndex == (selectedInsights.size() -1))
 		{
 			insightsIndex = 0;
 		}
@@ -313,7 +326,7 @@ public class MainActivity extends Activity {
 		
 		if (insightsIndex == 0)
 		{
-			insightsIndex = (insights.length -1);
+			insightsIndex = (selectedInsights.size() -1);
 		}
 		else
 			insightsIndex--;
@@ -329,7 +342,7 @@ public class MainActivity extends Activity {
 	private String getInsightAtIndex(int insightsIndex) 
 	{
 		
-		return insights[insightsIndex].getMessage();
+		return selectedInsights.get(insightsIndex).getMessage();
 		
 	}
 	
@@ -384,4 +397,127 @@ public class MainActivity extends Activity {
 		this.aButton = aButton;
 	}
 
+
+	/**
+	 * Gets the currently selected Category attribute.
+	 * @return The currently selected Category
+	 */
+	public static Category getSelectedCategory() 
+	{
+		return selectedCategory;
+	}
+
+
+	/**
+	 * Sets the selected category.
+	 * @param selectedCategory
+	 */
+	public void setSelectedCategory(Category selectedCategory) {
+		MainActivity.selectedCategory = selectedCategory;
+	}
+
+
+	/**
+	 * Gets the test array of all insights.
+	 * @return The test array of all insights.
+	 */
+	public Quote[] getInsights() 
+	{
+		return insights;
+	}
+
+
+	/**
+	 * Gets the selected Insights arrayList of quotes.
+	 * @return The selected arrayList
+	 */
+	public ArrayList<Quote> getSelectedInsights() 
+	{
+		return selectedInsights;
+	}
+
+
+	/**
+	 * Sets the selected Insights array of quotes based on specified Category
+	 * @param specified insight Category
+	 */
+	public static void setSelectedInsights(Category category) 
+	{
+
+		// empty the list
+		selectedInsights.clear();
+		
+		if (category == Category.all)
+		{
+			selectedCategory = Category.all;
+			selectedInsights =  new ArrayList<Quote>(Arrays.asList(insights));
+		}
+		else if (category == Category.attitude)
+		{
+			selectedCategory = Category.attitude;
+			
+			for (Quote insight : insights)
+			{
+				if (insight.getCategory() == Category.attitude)
+				{
+					selectedInsights.add(insight);
+				}	
+			}
+		}
+		else if (category == Category.beliefs)
+		{
+			selectedCategory = Category.beliefs;
+			
+			for (Quote insight : insights)
+			{
+				if (insight.getCategory() == Category.beliefs)
+				{
+					selectedInsights.add(insight);
+				}	
+			}
+		}
+		else if (category == Category.goals)
+		{
+			selectedCategory = Category.goals;
+			
+			for (Quote insight : insights)
+			{
+				if (insight.getCategory() == Category.goals)
+				{
+					selectedInsights.add(insight);
+				}	
+			}
+		}
+		else if (category == Category.health)
+		{
+			selectedCategory = Category.health;
+			
+			for (Quote insight : insights)
+			{
+				if (insight.getCategory() == Category.health)
+				{
+					selectedInsights.add(insight);
+				}	
+			}
+		}
+		else if (category == Category.wealth)
+		{
+			selectedCategory = Category.wealth;
+			
+			for (Quote insight : insights)
+			{
+				if (insight.getCategory() == Category.wealth)
+				{
+					selectedInsights.add(insight);
+				}	
+			}
+		}
+		
+		// Set the insight text to a quote from the selected insights
+		setInsightText(selectedInsights.get(0).getMessage());
+		
+	}
+
+	
+	
 }

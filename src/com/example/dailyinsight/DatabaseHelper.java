@@ -14,7 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String quoteType = "Type";
 	private static final String quoteMSG = "Quote";
 	
-	/*
+	/**
 	 * The constructor for DatabaseHelper class
 	 * @param context the context of the db
 	 */
@@ -23,7 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	@Override
-	/*
+	/**
 	 * Method to create the database
 	 * @see android.database.sqlite.SQLiteOpenHelper#onCreate(android.database.sqlite.SQLiteDatabase)
 	 */
@@ -34,7 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	@Override
-	/*
+	/**
 	 * Method to upgrade the database
 	 * @see android.database.sqlite.SQLiteOpenHelper#onUpgrade(android.database.sqlite.SQLiteDatabase, int, int)
 	 */
@@ -44,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	/**
-	 * This method populates the database with quotes
+	 * This method populates the database with quotes.
 	 */
 	public void addQuotes() {
 		ContentValues value = new ContentValues();

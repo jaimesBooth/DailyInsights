@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="19"
         android:targetSdkVersion="19" />
 
     <application
@@ -23,20 +23,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity1"
-            android:label="@string/title_activity_activity1" >
-        </activity>
-        <activity
             android:name=".Activity2"
             android:label="@string/title_activity_activity2"
-            android:parentActivityName=".MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.dailyinsight.MainActivity" />
-        </activity>
-        <activity
-            android:name=".Activity3"
-            android:label="@string/title_activity_activity3"
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

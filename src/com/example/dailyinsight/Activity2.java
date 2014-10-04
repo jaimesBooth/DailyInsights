@@ -11,13 +11,16 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Toast;
+import com.example.dailyinsight.MainActivity;
 
 /**
  * Serves as a settings menu for the DailyInsights application.
  * @author Siatua Uili, 
- * @modified jaimesbooth 23/09/14
+ * @modified Jaimes 23/09/14
  * 	Changed topics to Sprint 1 insight topics: All, Health, Wealth and Goals.
  * 	Added Toast when group radio button changed
+ * @modified Jaimes 04/10/14 Set topic to currently selected category.
+ * 	Change insights quote array list based on selected topic.
  *
  */
 public class Activity2 extends Activity
@@ -45,12 +48,36 @@ public class Activity2 extends Activity
 		
 		imgBtnTopic = (ImageButton) findViewById(R.id.imageButton1);
 
-		// Set topic to All by default
-		radioTopicsGroup.check(R.id.radioAll);
+		// Set topic to currently selected category
+		if (MainActivity.getSelectedCategory() == Category.all)
+		{
+			radioTopicsGroup.check(R.id.radioAll);
+		}
+		else if (MainActivity.getSelectedCategory() == Category.attitude)
+		{
+			radioTopicsGroup.check(R.id.radioAttitude);
+		}
+		else if (MainActivity.getSelectedCategory() == Category.beliefs)
+		{
+			radioTopicsGroup.check(R.id.radioBeliefs);
+		}
+		else if (MainActivity.getSelectedCategory() == Category.goals)
+		{
+			radioTopicsGroup.check(R.id.radioGoals);
+		}
+		else if (MainActivity.getSelectedCategory() == Category.health)
+		{
+			radioTopicsGroup.check(R.id.radioHealth);
+		}
+		else if (MainActivity.getSelectedCategory() == Category.wealth)
+		{
+			radioTopicsGroup.check(R.id.radioWealth);
+		}
 
 		radioTopicsGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() 
 		{
 
+			@Override
 			public void onCheckedChanged(RadioGroup radioTopicsGroup, int checkedId) 
 			{
 				
@@ -58,24 +85,54 @@ public class Activity2 extends Activity
 				{
 					
 					toastSelectedRadioButton();
+					
+					// Change the set of selected insights to All the quotes
+					MainActivity.setSelectedInsights(Category.all);
 
 				}
-				else if(R.id.radioHealth == checkedId)
+				else if(R.id.radioAttitude == checkedId)
 				{
 					
 					toastSelectedRadioButton();
+					
+					// Change the set of selected insights to Attitude the quotes
+					MainActivity.setSelectedInsights(Category.attitude);
 
 				}
-				else if(R.id.radioWealth == checkedId)
+				else if(R.id.radioBeliefs == checkedId)
 				{
 					
 					toastSelectedRadioButton();
+					
+					// Change the set of selected insights to Beliefs the quotes
+					MainActivity.setSelectedInsights(Category.beliefs);
 
 				}
 				else if(R.id.radioGoals == checkedId)
 				{
 					
 					toastSelectedRadioButton();
+					
+					// Change the set of selected insights to Goals the quotes
+					MainActivity.setSelectedInsights(Category.goals);
+
+				}
+				else if(R.id.radioHealth == checkedId)
+				{
+					
+					toastSelectedRadioButton();
+					
+					// Change the set of selected insights to Health the quotes
+					MainActivity.setSelectedInsights(Category.health);
+
+				}
+				else if(R.id.radioWealth == checkedId)
+				{
+					
+					toastSelectedRadioButton();
+					
+					// Change the set of selected insights to Wealth the quotes
+					MainActivity.setSelectedInsights(Category.wealth);
 
 				}
 			}

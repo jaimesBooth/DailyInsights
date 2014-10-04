@@ -7,27 +7,15 @@
     <string name="your">YOUR</string>
     <string name="daily_insight">DAILY INSIGHT</string>
     <string name="enter">Enter</string>
-    <string name="act1">Activity1</string>
     <string name="act2">Activity2</string>
-    <string name="act3">Activity3</string>
-    
-    <string name="title_activity_activity1">Activity1</string>
-    <string name="edit_message">Please select a name</string>
-    <string name="button_send">Press to enter name</string>
-    <string-array name="names_array">
-        <item>Sia</item>
-        <item>Ron</item>
-        <item>Luke</item>
-        <item>Jaimes</item>
-    </string-array>
 
     <string name="title_activity_activity2">Activity2</string>
-    <string name="radio_goals">Goals</string>
     <string name="radio_all">All</string>
+    <string name="radio_attitude">Attitude</string>
+    <string name="radio_beliefs">Beliefs</string>
+    <string name="radio_goals">Goals</string>
     <string name="radio_health">Health</string>
     <string name="radio_wealth">Wealth</string>
     <string name="contDesc">This is a topic button</string>
-    
-    <string name="title_activity_activity3">Activity3</string>
 
 </resources>
