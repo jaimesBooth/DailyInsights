@@ -28,9 +28,10 @@ import android.widget.*;
  * @modified 19/09/14 Implemented changing to settings activity when selecting settings from menu.
  *  http://developer.android.com/guide/topics/ui/menus.html#RespondingOptionsMenu
  * @modified 23/09/14 Removed buttons to activity.
- * @Modified 01/10/14 Reduced code repetition, and edited button action message. Replaced string away with new quote and category classes.
+ * @Modified 01/10/14 Luke Reduced code repetition, and edited button action message. Replaced string away with new quote and category classes.
  * @modified 04/10/14 Jaimes Refactor Category and Quote class to start with Capital. Added selectedCategory attribute.
  * 	ArrayList of selected insights based on selected category. Set attributes and methods to static to be accessible from settings activity.
+ * @modified 05/1014 Luke Edited toast length. Fixed bug with insightsIndex pointing to array
  */
 public class MainActivity extends Activity {
 
@@ -52,8 +53,7 @@ public class MainActivity extends Activity {
 	
 	private static ArrayList<Quote> selectedInsights; //The current selection of insight quotes based on selected category topic
 	
-	private int insightsIndex = 0; // Pointer to currently displayed insight
-	
+	private static int insightsIndex = 0; // Pointer to currently displayed insight
 	
 	// Array of backgrounds for testing purposes
 	// http://stackoverflow.com/questions/3355220/android-how-can-i-make-a-drawable-array
@@ -61,11 +61,9 @@ public class MainActivity extends Activity {
 	
 	private int backgroundIndex = 0; // Pointer to currently displayed background
 	
-	
 	// The gesture detector object which detects swipes
 	private GestureDetectorCompat gestureDetector;
 
-	
 	/**
 	 * Creates the DailyInsight main activity.
 	 * 
@@ -104,9 +102,7 @@ public class MainActivity extends Activity {
 					insight.setText("Todays Insight is: \n The longer you wait to do something you should do now, the greater the odds that you will never actually do it.");
 				}
 			});
-
 	}
-	
 	
 	/**
 	 * Triggers the gestureDetectector on a touch event.
@@ -163,7 +159,6 @@ public class MainActivity extends Activity {
 	    }
 	}
 	
-	
 	/**
 	 * Handles gesture events. An enclosed class.
 	 * @author jaimes
@@ -178,7 +173,6 @@ public class MainActivity extends Activity {
 	    private float flingMin = 100;
 	    private float velocityMin = 100;
 	    
-	    
 	    /**
 	     * What to do on finger "press". This has to be implemented (even though it may not be used)
 	     * to allow other gestures to be detected.
@@ -191,7 +185,6 @@ public class MainActivity extends Activity {
 	    	
 	        return true;
 	    }
-
 	    
 	    /**
 	     * Detects swipe direction and implements the actions to be taken on 
@@ -246,7 +239,7 @@ public class MainActivity extends Activity {
 	    	
 	    		// Handy notification
 	    		Toast.makeText(getApplicationContext(), 
-                        "Forward", Toast.LENGTH_LONG).show();
+                        "Forward", Toast.LENGTH_SHORT).show();
 	    		
 	    		// Change to next insight
 	    		incrementInsightIndex();
@@ -260,7 +253,7 @@ public class MainActivity extends Activity {
 	    	else if(backward){
 
 	    		Toast.makeText(getApplicationContext(), 
-                        "Backward", Toast.LENGTH_LONG).show();
+                        "Backward", Toast.LENGTH_SHORT).show();
 	    		
 	    		decrementInsightIndex();
 	    		
@@ -273,7 +266,7 @@ public class MainActivity extends Activity {
 	    	{
 
 	    		Toast.makeText(getApplicationContext(), 
-	                    "Down", Toast.LENGTH_LONG).show();
+	                    "Down", Toast.LENGTH_SHORT).show();
 	    		
 	    		decrementBackgroundIndex();
 
@@ -286,7 +279,7 @@ public class MainActivity extends Activity {
 	    	{
 
 	    		Toast.makeText(getApplicationContext(), 
-	                    "Up", Toast.LENGTH_LONG).show();
+	                    "Up", Toast.LENGTH_SHORT).show();
 
 	    		incrementBackgroundIndex();
 
@@ -302,20 +295,17 @@ public class MainActivity extends Activity {
 
 	}
 	
-	
 	/**
      * Increments the insights array, looping if end of array is reached.
      */
 	private void incrementInsightIndex() 
 	{
-		
 		if (insightsIndex == (selectedInsights.size() -1))
 		{
 			insightsIndex = 0;
 		}
 		else
 			insightsIndex++;
-		
 	}
 	
     /**
@@ -323,17 +313,14 @@ public class MainActivity extends Activity {
      */
 	private void decrementInsightIndex() 
 	{
-		
 		if (insightsIndex == 0)
 		{
 			insightsIndex = (selectedInsights.size() -1);
 		}
 		else
 			insightsIndex--;
-		
 	}
-	
-	
+		
     /**
      * Gets the insight String from the insights array at the specified index.
      * @param insightsIndex
@@ -341,25 +328,20 @@ public class MainActivity extends Activity {
      */
 	private String getInsightAtIndex(int insightsIndex) 
 	{
-		
 		return selectedInsights.get(insightsIndex).getMessage();
-		
 	}
-	
 	
 	/**
      * Increments the backgrounds array, looping if end of array is reached.
      */
 	private void incrementBackgroundIndex() 
 	{
-		
 		if (backgroundIndex == (backgroundArray.length -1))
 		{
 			backgroundIndex = 0;
 		}
 		else
 			backgroundIndex++;
-		
 	}
 	
     /**
@@ -367,16 +349,13 @@ public class MainActivity extends Activity {
      */
 	private void decrementBackgroundIndex() 
 	{
-		
 		if (backgroundIndex == 0)
 		{
 			backgroundIndex = (backgroundArray.length -1);
 		}
 		else
 			backgroundIndex--;
-		
 	}
-
 
 	/**
 	 * Gets the aButton.
@@ -387,7 +366,6 @@ public class MainActivity extends Activity {
 		return aButton;
 	}
 
-
 	/**
 	 * Sets the aButton.
 	 * @param aButton
@@ -396,7 +374,6 @@ public class MainActivity extends Activity {
 	{
 		this.aButton = aButton;
 	}
-
 
 	/**
 	 * Gets the currently selected Category attribute.
@@ -407,7 +384,6 @@ public class MainActivity extends Activity {
 		return selectedCategory;
 	}
 
-
 	/**
 	 * Sets the selected category.
 	 * @param selectedCategory
@@ -415,7 +391,6 @@ public class MainActivity extends Activity {
 	public void setSelectedCategory(Category selectedCategory) {
 		MainActivity.selectedCategory = selectedCategory;
 	}
-
 
 	/**
 	 * Gets the test array of all insights.
@@ -426,7 +401,6 @@ public class MainActivity extends Activity {
 		return insights;
 	}
 
-
 	/**
 	 * Gets the selected Insights arrayList of quotes.
 	 * @return The selected arrayList
@@ -436,14 +410,12 @@ public class MainActivity extends Activity {
 		return selectedInsights;
 	}
 
-
 	/**
 	 * Sets the selected Insights array of quotes based on specified Category
 	 * @param specified insight Category
 	 */
 	public static void setSelectedInsights(Category category) 
 	{
-
 		// empty the list
 		selectedInsights.clear();
 		
@@ -512,12 +484,8 @@ public class MainActivity extends Activity {
 				}	
 			}
 		}
-		
+		insightsIndex = 0;
 		// Set the insight text to a quote from the selected insights
-		setInsightText(selectedInsights.get(0).getMessage());
-		
+		setInsightText(selectedInsights.get(insightsIndex).getMessage());	
 	}
-
-	
-	
 }
