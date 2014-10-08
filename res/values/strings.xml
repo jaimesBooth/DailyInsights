@@ -3,13 +3,11 @@
 
     <string name="app_name">DailyInsight</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
     <string name="your">YOUR</string>
     <string name="daily_insight">DAILY INSIGHT</string>
     <string name="enter">Enter</string>
-    <string name="act2">Activity2</string>
 
-    <string name="title_activity_activity2">Activity2</string>
+    <string name="title_activity_settings">Settings</string>
     <string name="radio_all">All</string>
     <string name="radio_attitude">Attitude</string>
     <string name="radio_beliefs">Beliefs</string>
@@ -17,5 +15,6 @@
     <string name="radio_health">Health</string>
     <string name="radio_wealth">Wealth</string>
     <string name="contDesc">This is a topic button</string>
+    <string name="instructions">\nInstructions: \nSelect the category of Insight you want to view from above. \nUse back button to return to main screen. \n \nFrom the main screen Swipe: \nLeft / right to change Insight. \nUp / down to change Background.</string>
 
 </resources>

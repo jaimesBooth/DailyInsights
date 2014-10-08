@@ -147,7 +147,7 @@ public class MainActivity extends Activity {
 	    {
 	        case R.id.action_settings:
 	        	// Open activity 2 in response to selecting settings
-	    		Intent intent = new Intent(this, Activity2.class);
+	    		Intent intent = new Intent(this, SettingsActivity.class);
 	    		
 	    		startActivity(intent);
 	            return true;
@@ -161,7 +161,7 @@ public class MainActivity extends Activity {
 	
 	/**
 	 * Handles gesture events. An enclosed class.
-	 * @author jaimes
+	 * @author Jaimes
 	 * http://code.tutsplus.com/tutorials/android-sdk-detecting-gestures--mobile-21161
 	 */
 	public class MyGestureListener extends GestureDetector.SimpleOnGestureListener 

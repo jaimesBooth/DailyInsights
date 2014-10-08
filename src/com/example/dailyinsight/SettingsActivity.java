@@ -18,8 +18,10 @@ import com.example.dailyinsight.MainActivity;
  * @modified Jaimes 04/10/14 Set topic to currently selected category.
  * 	Change insights quote array list based on selected topic.
  * @modified Luke 05/10/14 Reduced code repetition, removed chosen button and related code.
+ * @modified Jaimes 08/10/14 Reverted to plain background. Added instructions text box.
+ * 	Renamed to SettingsActivity (from Activity2) to clarify purpose.
  */
-public class Activity2 extends Activity
+public class SettingsActivity extends Activity
 {
 
 	private RadioGroup radioTopicsGroup;
@@ -30,7 +32,7 @@ public class Activity2 extends Activity
 	{
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_activity2);
+		setContentView(R.layout.activity_settings);
 
 		addListenerOnRadioGroup();
 
@@ -116,7 +118,7 @@ public class Activity2 extends Activity
 		radioTopicsButton = 
 				(RadioButton) findViewById(selectedId);
 
-		Toast.makeText (Activity2.this, radioTopicsButton.getText() 
+		Toast.makeText (SettingsActivity.this, radioTopicsButton.getText() 
 				+ " topic chosen", Toast.LENGTH_SHORT).show();
 	}
 }
