@@ -99,7 +99,7 @@ public class MainActivity extends Activity {
 				@Override
 				public void onClick(View v) 
 				{
-					insight.setText("Todays Insight is: \n The longer you wait to do something you should do now, the greater the odds that you will never actually do it.");
+					Toast.makeText (getApplicationContext(), "Quote Saved", Toast.LENGTH_SHORT).show();
 				}
 			});
 	}
