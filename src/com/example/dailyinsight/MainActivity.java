@@ -2,10 +2,12 @@ package com.example.dailyinsight;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v4.view.GestureDetectorCompat;
 //import android.util.Log;
@@ -31,11 +33,14 @@ import android.widget.*;
  * @Modified 01/10/14 Luke Reduced code repetition, and edited button action message. Replaced string away with new quote and category classes.
  * @modified 04/10/14 Jaimes Refactor Category and Quote class to start with Capital. Added selectedCategory attribute.
  * 	ArrayList of selected insights based on selected category. Set attributes and methods to static to be accessible from settings activity.
- * @modified 05/1014 Luke Edited toast length. Fixed bug with insightsIndex pointing to array
+ * @modified 05/10/14 Luke Edited toast length. Fixed bug with insightsIndex pointing to array
+ * @modified 13/10/14 Luke Now Includes the bookmarked quotes. Random Quote of the day added with welcome toast
+ *                         Additionally quotes are now added to the db, and removed beginning instructions.
  */
 public class MainActivity extends Activity {
 
 	private Button aButton; // The Enter Button on the Main Activity
+	private static DatabaseHelper quoteDatabase;
 	private static TextView insight; // The textbox to display the Insight
 	private static Category selectedCategory; //The currently selected category topic
 	
@@ -46,8 +51,8 @@ public class MainActivity extends Activity {
 						new Quote("Wealth \n is the heart and mind \n not the \npocket", Category.wealth),
 						new Quote("The longer you wait to do something you should do now, the greater the odds that you will never actually do it", Category.goals),
 						new Quote("A goal without \n a plan \n is just a wish", Category.goals),
-						new Quote("A bad attitude \n is like a flat tire. \n If your don't change it \n you'll never go \n anywhere", Category.attitude),
-						new Quote("Until you spread your wings. You'll have no idea how far you can fly", Category.attitude),
+						new Quote("A bad attitude \n is like a flat tire. \n If you do not change it \n you will never go \n anywhere", Category.attitude),
+						new Quote("Until you spread your wings. You will have no idea how far you can fly", Category.attitude),
 						new Quote("Your beliefs pave the way to success \n or block you", Category.beliefs),
 						new Quote("Whatever the mind \n of man can conceive and believe \n the mind can achieve", Category.beliefs)};
 	
@@ -87,8 +92,17 @@ public class MainActivity extends Activity {
 		insight = (TextView) findViewById(R.id.textView3);
 		insight.setTextColor(Color.rgb(200,0,0));
 		
-		// Place a short tutorial on how to use the app in the insight text box
-		insight.setText("Swipe left / right to change Insight \n Up / down to change background \n Settings accessible from the action bar");
+		// Place todays insight as the default, select the insight at random
+		Random random = new Random();
+		int todaysInsight = random.nextInt(insights.length);
+		insight.setText(insights [todaysInsight].getMessage());
+		
+		// Inform user where to find instructions 
+		Toast.makeText(getApplicationContext(), 
+                "Please Check the settings menu \n for application instructions", Toast.LENGTH_LONG).show();
+		
+		// Initialize the bookmarked quotes database
+		quoteDatabase = new DatabaseHelper(this);
 		
 		// Listen for a click on this button
 		getaButton().setOnClickListener(new OnClickListener() 
@@ -99,7 +113,10 @@ public class MainActivity extends Activity {
 				@Override
 				public void onClick(View v) 
 				{
+					SQLiteDatabase db = quoteDatabase.getWritableDatabase();
+					String insertQuery = "INSERT INTO QUOTES (Quote) VALUES ('"+insight.getText()+"')";
 					Toast.makeText (getApplicationContext(), "Quote Saved", Toast.LENGTH_SHORT).show();
+					db.execSQL(insertQuery);
 				}
 			});
 	}
