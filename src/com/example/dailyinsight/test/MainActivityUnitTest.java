@@ -17,7 +17,7 @@ public class MainActivityUnitTest extends ActivityUnitTestCase<MainActivity>
 {
 
 	private int testButtonId;
-	private MainActivity activity;
+	private static MainActivity activity;
 	private int testTextViewId;
 	
 	public MainActivityUnitTest() 
@@ -56,7 +56,7 @@ public class MainActivityUnitTest extends ActivityUnitTestCase<MainActivity>
 	    //Ensure that the text on the button is "Enter"
 	    Button view = (Button) activity.findViewById(testButtonId);
 
-	    assertEquals("Incorrect label of the button", "Enter", view.getText());
+	    assertEquals("Incorrect label of the button", "Favourite", view.getText());
 	 }
 
 	public void testOnCreateBundle() {
@@ -79,7 +79,7 @@ public class MainActivityUnitTest extends ActivityUnitTestCase<MainActivity>
 	    assertNotNull(activity.findViewById(testTextViewId));
 	    
 	    // Change the insight text
-	    activity.setInsightText("Test setInsight");
+	    MainActivity.setInsightText("Test setInsight");
 	    
 	    //Ensure that the text on the text view is "Test setInsight"
 	    TextView textView = (TextView) activity.findViewById(testTextViewId);

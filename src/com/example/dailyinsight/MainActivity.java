@@ -3,6 +3,7 @@ package com.example.dailyinsight;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -23,16 +24,13 @@ import android.widget.*;
  * 
  * @author 09/09/14 Sia 1135311, Luke 1092144, Ron 1250610, Jaimes 1305390
  * @modified 10/09/14 Implemented swipe recognition:
- *           http://code.tutsplus.com/tutorials
- *           /android-sdk-detecting-gestures--mobile-21161 Implemented change of
- *           insight on swipe Left / Right Implemented change of background on
- *           swipe Up / Down
- *           http://stackoverflow.com/questions/3355220/android-how
- *           -can-i-make-a-drawable-array
+ *           http://code.tutsplus.com/tutorials/android-sdk-detecting-gestures--mobile-21161
+ *           Implemented change of insight on swipe Left / Right Implemented change of background on
+ *           swipe Up / Down    
+ *           http://stackoverflow.com/questions/3355220/android-how-can-i-make-a-drawable-array
  * @modified 19/09/14 Implemented changing to settings activity when selecting
  *           settings from menu.
- *           http://developer.android.com/guide/topics/ui/menus
- *           .html#RespondingOptionsMenu
+ *           http://developer.android.com/guide/topics/ui/menushtml#RespondingOptionsMenu
  * @modified 23/09/14 Removed buttons to activity.
  * @Modified 01/10/14 Luke Reduced code repetition, and edited button action
  *           message. Replaced string away with new quote and category classes.
@@ -46,17 +44,21 @@ import android.widget.*;
  *           the day added with welcome toast Additionally quotes are now added
  *           to the db, and removed beginning instructions.
  * @modified 16/10/14 Jaimes Added proof of concept Facebook connectivity test.
- * 			 AVD networking can be toggled by pressing F8 function key. 
+ *           AVD networking can be toggled by pressing F8 function key.
+ *           Implemented favourites category to store favorite when button pressed.
  */
 public class MainActivity extends Activity
 {
-
+	
+	// An object of this class to reference from other classes
+	public static MainActivity mainActivity; 
+	
 	private Button aButton; // The Favorite Button on the Main Activity
-	private ImageButton facebookImgButton; // The Facebook ImageButton on the Main Activity
+	private ImageButton facebookImgButton; // The Facebook ImageButton on the
+											// Main Activity
 	private static DatabaseHelper quoteDatabase;
 	private static TextView insight; // The textbox to display the Insight
-	private static Category selectedCategory; // The currently selected category
-												// topic
+	private static Category selectedCategory; // The currently selected category topic
 
 	// A small array of insights for testing purposes
 	private static Quote[] insights =
@@ -88,13 +90,13 @@ public class MainActivity extends Activity
 					"Whatever the mind \n of man can conceive and believe \n the mind can achieve",
 					Category.beliefs) };
 
-	private static ArrayList<Quote> selectedInsights; // The current selection
-														// of insight quotes
-														// based on selected
-														// category topic
+	// The current selection of insight quotes based on selected category topic
+	private static ArrayList<Quote> selectedInsights;
 
-	private static int insightsIndex = 0; // Pointer to currently displayed
-											// insight
+	// The current selection of insight quotes based on selected category topic
+	private static ArrayList<Quote> favouriteInsights;
+
+	private static int insightsIndex = 0; // Pointer to currently displayed insight
 
 	// Array of backgrounds for testing purposes
 	// http://stackoverflow.com/questions/3355220/android-how-can-i-make-a-drawable-array
@@ -108,7 +110,6 @@ public class MainActivity extends Activity
 	// The gesture detector object which detects swipes
 	private GestureDetectorCompat gestureDetector;
 
-	
 	/**
 	 * Creates the DailyInsight main activity.
 	 * 
@@ -118,13 +119,22 @@ public class MainActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		mainActivity = this;
+		
+		//@SuppressWarnings("unused")
+		//SettingsActivity settingsActivity = new SettingsActivity(MainActivity.this);
 
 		setaButton((Button) this.findViewById(R.id.button1));
-		this.facebookImgButton = (ImageButton) this.findViewById(R.id.imageButtonFacebook);
+		this.facebookImgButton = (ImageButton) this
+				.findViewById(R.id.imageButtonFacebook);
 
 		// Initialize the selected category
 		selectedCategory = Category.all;
 		selectedInsights = new ArrayList<Quote>(Arrays.asList(insights));
+		
+		// Initialize the favorites array
+		favouriteInsights = new ArrayList<Quote>();
 
 		// Initialize the gesture detector
 		gestureDetector = new GestureDetectorCompat(this,
@@ -163,8 +173,14 @@ public class MainActivity extends Activity
 						+ insight.getText() + "')";
 				db.execSQL(insertQuery);
 
-				Toast.makeText(getApplicationContext(), "Quote Saved",
-						Toast.LENGTH_SHORT).show();
+				// Insert current insight in to the favorite insight array as a
+				// favorite
+				Quote newFavouriteQuote = new Quote((String) insight.getText(),
+						Category.favourites);
+				favouriteInsights.add(newFavouriteQuote);
+
+				Toast.makeText(getApplicationContext(),
+						"Quote saved as Favourite", Toast.LENGTH_SHORT).show();
 			}
 		});
 
@@ -177,7 +193,8 @@ public class MainActivity extends Activity
 			@Override
 			public void onClick(View v)
 			{
-				// Test network connection by attempting to download Facebook URL
+				// Test network connection by attempting to download Facebook
+				// URL
 				new ConnectivityTest(getApplicationContext());
 			}
 		});
@@ -217,8 +234,7 @@ public class MainActivity extends Activity
 	/**
 	 * Passes the selected MenuItem when the user selects an item from the
 	 * options menu (including action items in the action bar).
-	 * http://developer.
-	 * android.com/guide/topics/ui/menus.html#RespondingOptionsMenu
+	 * http://developer.android.com/guide/topics/ui/menus.html#RespondingOptionsMenu
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
@@ -228,7 +244,7 @@ public class MainActivity extends Activity
 		{
 		case R.id.action_settings:
 			// Open SettingsActivity in response to selecting settings
-			Intent intent = new Intent(this, SettingsActivity.class);
+			Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
 
 			startActivity(intent);
 			return true;
@@ -241,8 +257,7 @@ public class MainActivity extends Activity
 	 * Handles gesture events. An enclosed class.
 	 * 
 	 * @author Jaimes
-	 *         http://code.tutsplus.com/tutorials/android-sdk-detecting-gestures
-	 *         --mobile-21161
+	 * http://code.tutsplus.com/tutorials/android-sdk-detecting-gestures--mobile-21161
 	 */
 	public class MyGestureListener extends
 			GestureDetector.SimpleOnGestureListener
@@ -467,7 +482,7 @@ public class MainActivity extends Activity
 	 * 
 	 * @return The currently selected Category
 	 */
-	public static Category getSelectedCategory()
+	public Category getSelectedCategory()
 	{
 		return selectedCategory;
 	}
@@ -508,7 +523,7 @@ public class MainActivity extends Activity
 	 * @param specified
 	 *            insight Category
 	 */
-	public static void setSelectedInsights(Category category)
+	public void setSelectedInsights(Category category)
 	{
 		// empty the list
 		selectedInsights.clear();
@@ -539,6 +554,18 @@ public class MainActivity extends Activity
 					selectedInsights.add(insight);
 				}
 			}
+		} else if (category == Category.favourites)
+		{
+			selectedCategory = Category.favourites;
+
+			for (Quote insight : favouriteInsights)
+			{
+				if (insight.getCategory() == Category.favourites)
+				{
+					selectedInsights.add(insight);
+				}
+			}
+
 		} else if (category == Category.goals)
 		{
 			selectedCategory = Category.goals;
@@ -577,4 +604,16 @@ public class MainActivity extends Activity
 		// Set the insight text to a quote from the selected insights
 		setInsightText(selectedInsights.get(insightsIndex).getMessage());
 	}
+
+	/**
+	 * Gets the favouriteInsight ArrayList.
+	 * @return The favouriteInsights array.
+	 */
+	public static ArrayList<Quote> getFavouriteInsights()
+	{
+		return favouriteInsights;
+	}
+	
+	
+
 }

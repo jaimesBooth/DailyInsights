@@ -8,5 +8,5 @@ package com.example.dailyinsight;
  */
 public enum Category 
 {
-	all, health, wealth, goals, attitude, beliefs;
+	all, attitude, beliefs, favourites, goals, health, wealth;
 }

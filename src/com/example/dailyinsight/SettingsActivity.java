@@ -1,11 +1,13 @@
 package com.example.dailyinsight;
 
 import android.app.Activity;
+//import android.content.Context;
 import android.os.Bundle;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Toast;
+
 import com.example.dailyinsight.MainActivity;
 
 /**
@@ -44,27 +46,31 @@ public class SettingsActivity extends Activity
 		radioTopicsGroup = (RadioGroup) findViewById(R.id.radioTopics);
 
 		// Set topic to currently selected category
-		if (MainActivity.getSelectedCategory() == Category.all)
+		if (MainActivity.mainActivity.getSelectedCategory() == Category.all)
 		{
 			radioTopicsGroup.check(R.id.radioAll);
 		}
-		else if (MainActivity.getSelectedCategory() == Category.attitude)
+		else if (MainActivity.mainActivity.getSelectedCategory() == Category.attitude)
 		{
 			radioTopicsGroup.check(R.id.radioAttitude);
 		}
-		else if (MainActivity.getSelectedCategory() == Category.beliefs)
+		else if (MainActivity.mainActivity.getSelectedCategory() == Category.beliefs)
 		{
 			radioTopicsGroup.check(R.id.radioBeliefs);
 		}
-		else if (MainActivity.getSelectedCategory() == Category.goals)
+		else if (MainActivity.mainActivity.getSelectedCategory() == Category.favourites)
+		{
+			radioTopicsGroup.check(R.id.radioFavourites);
+		}
+		else if (MainActivity.mainActivity.getSelectedCategory() == Category.goals)
 		{
 			radioTopicsGroup.check(R.id.radioGoals);
 		}
-		else if (MainActivity.getSelectedCategory() == Category.health)
+		else if (MainActivity.mainActivity.getSelectedCategory() == Category.health)
 		{
 			radioTopicsGroup.check(R.id.radioHealth);
 		}
-		else if (MainActivity.getSelectedCategory() == Category.wealth)
+		else if (MainActivity.mainActivity.getSelectedCategory() == Category.wealth)
 		{
 			radioTopicsGroup.check(R.id.radioWealth);
 		}
@@ -78,32 +84,53 @@ public class SettingsActivity extends Activity
 				if(R.id.radioAll == checkedId)
 				{
 					// Change the set of selected insights to All the quotes
-					MainActivity.setSelectedInsights(Category.all);
+					MainActivity.mainActivity.setSelectedInsights(Category.all);
 				}
 				else if(R.id.radioAttitude == checkedId)
 				{
-					// Change the set of selected insights to Attitude the quotes
-					MainActivity.setSelectedInsights(Category.attitude);
+					// Change the set of selected insights to Attitude quotes
+					MainActivity.mainActivity.setSelectedInsights(Category.attitude);
 				}
 				else if(R.id.radioBeliefs == checkedId)
 				{
-					// Change the set of selected insights to Beliefs the quotes
-					MainActivity.setSelectedInsights(Category.beliefs);
+					// Change the set of selected insights to Beliefs quotes
+					MainActivity.mainActivity.setSelectedInsights(Category.beliefs);
+				}
+				else if(R.id.radioFavourites == checkedId)
+				{
+					// Catch empty favorites array
+					if (MainActivity.mainActivity.getFavouriteInsights().isEmpty())
+					{
+						// Notify user there are no favorites
+						Toast.makeText(getApplicationContext(),"No Favourites to show", Toast.LENGTH_SHORT).show();
+						
+						// revert selected insights to "All"
+						MainActivity.mainActivity.setSelectedInsights(Category.all);
+						radioTopicsGroup.check(R.id.radioAll);
+						
+						// Break out of method. Naughty Naughty!
+						return;
+						
+					} else
+					{
+						// Change the set of selected insights to Favourites quotes
+						MainActivity.mainActivity.setSelectedInsights(Category.favourites);
+					}
 				}
 				else if(R.id.radioGoals == checkedId)
 				{
-					// Change the set of selected insights to Goals the quotes
-					MainActivity.setSelectedInsights(Category.goals);
+					// Change the set of selected insights to Goals quotes
+					MainActivity.mainActivity.setSelectedInsights(Category.goals);
 				}
 				else if(R.id.radioHealth == checkedId)
 				{
-					// Change the set of selected insights to Health the quotes
-					MainActivity.setSelectedInsights(Category.health);
+					// Change the set of selected insights to Health quotes
+					MainActivity.mainActivity.setSelectedInsights(Category.health);
 				}
 				else if(R.id.radioWealth == checkedId)
 				{
-					// Change the set of selected insights to Wealth the quotes
-					MainActivity.setSelectedInsights(Category.wealth);
+					// Change the set of selected insights to Wealth quotes
+					MainActivity.mainActivity.setSelectedInsights(Category.wealth);
 				}
 				toastSelectedRadioButton();
 			}

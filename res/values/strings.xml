@@ -5,13 +5,14 @@
     <string name="action_settings">Settings</string>
     <string name="your">YOUR</string>
     <string name="daily_insight">DAILY INSIGHT</string>
-    <string name="bookmark">Favourite</string>
+    <string name="bookmark">Add as Favourite</string>
 
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_http_example">HttpExample</string>
     <string name="radio_all">All</string>
     <string name="radio_attitude">Attitude</string>
     <string name="radio_beliefs">Beliefs</string>
+    <string name="radio_favourites">Favourites</string>
     <string name="radio_goals">Goals</string>
     <string name="radio_health">Health</string>
     <string name="radio_wealth">Wealth</string>
