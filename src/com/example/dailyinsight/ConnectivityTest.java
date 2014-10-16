@@ -32,8 +32,7 @@ public class ConnectivityTest
 	 * Attempts to download the contents of the Facebook URL via the devices
 	 * network connection.
 	 * 
-	 * @param context
-	 *            The context of the activity which called this constructor.
+	 * @param context The context of the activity which called this constructor.
 	 */
 	public ConnectivityTest(Context context)
 	{
@@ -42,6 +41,10 @@ public class ConnectivityTest
 
 		// The URL to try to fetch.
 		String stringUrl = "https://www.facebook.com";
+		
+		// Notify user of testing connectivity
+		Toast.makeText(mainContext, "Attempting to contact Facebook",
+				Toast.LENGTH_SHORT).show();
 
 		// Before attempting to fetch the URL, makes sure that there is a
 		// network connection.
@@ -56,7 +59,7 @@ public class ConnectivityTest
 		if (networkInfo != null && networkInfo.isConnected())
 		{
 			new DownloadWebpageTask().execute(stringUrl);
-			// Otherwise notify that connection is not available
+		// Otherwise notify that connection is not available
 		} else
 		{
 			Toast.makeText(mainContext, "No network connection available.",
@@ -64,6 +67,7 @@ public class ConnectivityTest
 		}
 	}
 
+	
 	/**
 	 * Uses AsyncTask to create a task away from the main UI thread. This task
 	 * takes a URL string and uses it to create an HttpUrlConnection. Once the
@@ -96,7 +100,8 @@ public class ConnectivityTest
 		@Override
 		protected void onPostExecute(String result)
 		{
-			Toast.makeText(mainContext, result, Toast.LENGTH_LONG).show();
+			Toast.makeText(mainContext, "Facebook contacted: \n"+ result, Toast.LENGTH_LONG).show();
+
 		}
 	}
 
@@ -104,8 +109,7 @@ public class ConnectivityTest
 	 * Given a URL, establishes an HttpUrlConnection and retrieves the web page
 	 * content as an InputStream, which it returns as a string.
 	 * 
-	 * @param myurl
-	 *            The String representing the URL to download.
+	 * @param myurl The String representing the URL to download.
 	 * @return The string representing the down-loaded content.
 	 * @throws IOException
 	 */
@@ -148,10 +152,8 @@ public class ConnectivityTest
 	/**
 	 * Reads an InputStream and converts it to a String.
 	 * 
-	 * @param stream
-	 *            The stream to read and convert.
-	 * @param len
-	 *            The number of characters of the stream to read.
+	 * @param stream The stream to read and convert.
+	 * @param len The number of characters of the stream to read.
 	 * @return The string of the read stream.
 	 * @throws IOException
 	 * @throws UnsupportedEncodingException

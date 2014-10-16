@@ -78,6 +78,7 @@ public class SettingsActivity extends Activity
 		radioTopicsGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() 
 		{
 
+			@SuppressWarnings("static-access")
 			@Override
 			public void onCheckedChanged(RadioGroup radioTopicsGroup, int checkedId) 
 			{

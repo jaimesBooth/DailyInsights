@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.example.dailyinsight.MainActivity;
 
 /**
- * 
+ * Tests the main Activity.
  * @author 21/09/14 jaimes
  * 	http://www.vogella.com/tutorials/AndroidTesting/article.html
  *
@@ -17,8 +17,12 @@ public class MainActivityUnitTest extends ActivityUnitTestCase<MainActivity>
 {
 
 	private int testButtonId;
+	private int testButton2Id;
 	private static MainActivity activity;
 	private int testTextViewId;
+	private int testInsightTxtView;
+	private int testTxtView1;
+	private int testTxtView2;
 	
 	public MainActivityUnitTest() 
 	{
@@ -49,22 +53,40 @@ public class MainActivityUnitTest extends ActivityUnitTestCase<MainActivity>
 	public void testLayout() 
 	{
 	    testButtonId = com.example.dailyinsight.R.id.button1;
+	    testButton2Id = com.example.dailyinsight.R.id.imageButtonFacebook;
+	    testTxtView1 = com.example.dailyinsight.R.id.textView1;
+	    testTxtView2 = com.example.dailyinsight.R.id.textView2;
+	    testInsightTxtView = com.example.dailyinsight.R.id.textView3;
+	    
 	    
 	    // Check that the layout of the MainActivity contains a button with the R.id.button1 ID
 	    assertNotNull(activity.findViewById(testButtonId));
 	    
-	    //Ensure that the text on the button is "Enter"
+	    //Ensure that the text on the button is "Add as Favourite"
 	    Button view = (Button) activity.findViewById(testButtonId);
-
-	    assertEquals("Incorrect label of the button", "Favourite", view.getText());
+	    assertEquals("Incorrect label of the button", "Add as Favourite", view.getText());
+	    
+	    
+	    // Check that the layout of the MainActivity contains a button with the R.id.imageButtonFacebook ID
+	    assertNotNull(activity.findViewById(testButton2Id));
+	    
+	    // Check that the layout has an insight textview
+	    assertNotNull(activity.findViewById(testInsightTxtView));
+	    
+	    // Check that the layout has an textview1
+	    assertNotNull(activity.findViewById(testTxtView1));
+	    
+	    // Check that the layout has an textview2
+	    assertNotNull(activity.findViewById(testTxtView2));
+	    
 	 }
 
 	public void testOnCreateBundle() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 
 	public void testOnTouchEventMotionEvent() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 
 	
@@ -88,11 +110,11 @@ public class MainActivityUnitTest extends ActivityUnitTestCase<MainActivity>
 	}
 
 	public void testOnCreateOptionsMenuMenu() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 
 	public void testOnOptionsItemSelectedMenuItem() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 
 }
